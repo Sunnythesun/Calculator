@@ -8,7 +8,7 @@
 
  #calc-container div {
      box-sizing: border-box;
-     border: 2px solid red;
+     /* border: 2px solid red; */
      width: 33.3%;
      flex: 1;
  }
@@ -19,6 +19,7 @@
  }
 
  #flex-container div {
+     text-align: center;
      box-sizing: border-box;
      border: 2px solid black;
      width: 25%;
@@ -26,37 +27,22 @@
      flex: 1 1 auto;
  }
 
- #flex-container #screen-container {
+ #flex-container #entriesScreen {
      width: 100%;
-     aspect-ratio: auto;
+     aspect-ratio: 8/1;
  }
 
- #flex-container #answer-container {
+ #flex-container #answerScreen {
      width: 100%;
-     aspect-ratio: auto;
+     aspect-ratio: 4/1;
  }
 
- #screen-container {
-     display: flex;
+ #flex-container #clearButton {
+     width: 50%;
+     height: 10vh;
  }
 
-
- /* #screen-container div {
-     box-sizing: border-box;
-     border: 2px solid pink;
-     width: 25%;
-     aspect-ratio: 1/1;
-     flex: 1;
- } */
-
- #answer-container {
-     display: flex;
+ #flex-container #backButton {
+     width: 50%;
+     height: 10vh;
  }
-
- /* #answer-container div {
-     box-sizing: border-box;
-     border: 2px solid yellow;
-     width: 25%;
-     aspect-ratio: 1/1;
-     flex: 1;
- } */
