@@ -19,7 +19,13 @@
  }
 
  #flex-container div {
-     text-align: center;
+     /*centers text using flex */
+     display: flex;
+     justify-content: center;
+     align-items: center;
+
+     font-size: larger;
+
      box-sizing: border-box;
      border: 2px solid black;
      width: 25%;
@@ -30,11 +36,19 @@
  #flex-container #entriesScreen {
      width: 100%;
      aspect-ratio: 8/1;
+
+     display: flex;
+     justify-content: end;
+     align-items: center;
  }
 
  #flex-container #answerScreen {
      width: 100%;
      aspect-ratio: 4/1;
+
+     display: flex;
+     justify-content: end;
+     align-items: center;
  }
 
  #flex-container #clearButton {

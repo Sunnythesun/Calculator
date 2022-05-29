@@ -1,6 +1,10 @@
+let equation = " "; //for the stored equation when buttons are pressed
+
+
 const body = document.body;
 const calcContainer = document.createElement("div");        //flex container creation
 const flexContainer = document.createElement("div");
+const screenContainer = document.createElement("div");
 calcContainer.setAttribute("id", "calc-container");
 flexContainer.setAttribute("id", "flex-container");
 body.append(calcContainer);
@@ -18,10 +22,9 @@ for (let i = 0; i < 2; i++) {                                   //creates 2 more
 for (let i = 0; i < 20; i++) {                                  //creates calculator grid using flexbox
     const div = document.createElement("div");
     flexContainer.append(div);
-    //div.style.backgroundColor = "rgb(116,179,99)";
 
     if (i === 0) {                     //calculator buttons
-        div.innerText = "5 x 19";
+        //div.innerText = equation;
         div.setAttribute("id", "entriesScreen")
     }
     else if (i === 1) {
@@ -29,11 +32,11 @@ for (let i = 0; i < 20; i++) {                                  //creates calcul
         div.setAttribute("id", "answerScreen")
     }
     else if (i === 2) {
-        div.innerText = "clear button";
+        div.innerText = "CLEAR";
         div.setAttribute("id", "clearButton")
     }
     else if (i === 3) {
-        div.innerText = "backspace";
+        div.innerText = "BACK";
         div.setAttribute("id", "backButton")
     }
     else if (i === 4) {
@@ -54,15 +57,15 @@ for (let i = 0; i < 20; i++) {                                  //creates calcul
     }
     else if (i === 8) {
         div.innerText = "4";
-        div.setAttribute("id", "Bbutton")
+        div.setAttribute("id", "4Button")
     }
     else if (i === 9) {
         div.innerText = "5";
-        div.setAttribute("id", "Bbutton")
+        div.setAttribute("id", "5Button")
     }
     else if (i === 10) {
         div.innerText = "6";
-        div.setAttribute("id", "Bbutton")
+        div.setAttribute("id", "6button")
     }
     else if (i === 11) {
         div.innerText = "*";
@@ -70,7 +73,7 @@ for (let i = 0; i < 20; i++) {                                  //creates calcul
     }
     else if (i === 12) {
         div.innerText = "1";
-        div.setAttribute("id", "Bbutton")
+        div.setAttribute("id", "1button")
     }
     else if (i === 13) {
         div.innerText = "2";
@@ -104,8 +107,19 @@ for (let i = 0; i < 20; i++) {                                  //creates calcul
 }
 
 
+document.getElementById("5Button").addEventListener("mousedown", clicked);
+document.getElementById("5Button").addEventListener("mouseup", unclicked);
 
 
+
+function clicked() {
+    event.target.style.backgroundColor = "rgb(208, 208, 208)";
+    equation += "5";
+}
+
+function unclicked() {
+    event.target.style.backgroundColor = "rgb(238, 238, 238)";
+}
 
 
 function add(a, b) {
