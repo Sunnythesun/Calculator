@@ -180,27 +180,51 @@ function clicked() {
 
     if (getElementOnClick(event) === "clearButton") {
         equation = " ";
+        answer = " ";
+        a = " ";
+        b = " ";
+        aorb = 0;
+        func = " ";
     }
     else if (getElementOnClick(event) === "backButton") {
         equation = equation.substring(0, equation.length - 1);
     }
     else if (getElementOnClick(event) === "/Button") {
+        doublePress();
+        notBodmas();
         equation += "÷";
+        operatorPress();
     }
     else if (getElementOnClick(event) === "*Button") {
+        doublePress();
+        notBodmas();
         equation += "×";
+        operatorPress();
+    }
+    else if (getElementOnClick(event) === "+Button") {
+        doublePress();
+        notBodmas();
+        equation += "+";
+        operatorPress();
+    }
+    else if (getElementOnClick(event) === "-Button") {
+        doublePress();
+        notBodmas();
+        equation += "-";
+        operatorPress();
     }
     else if (getElementOnClick(event) === "=Button") {
-        console.log(parseInt(equation));
+        answer = operate(func, parseInt(a), parseInt(b));
     }
     else {
         equation += getElementOnClick(event).charAt(0);
+        numPress();
     }
 
-    var entryDiv = document.getElementById("entriesScreen");
+    var entryDiv = document.getElementById("entriesScreen");    //text for entries screen
     entryDiv.innerText = equation;
 
-    var answerDiv = document.getElementById("answerScreen");
+    var answerDiv = document.getElementById("answerScreen");    //text for answer screen
     answerDiv.innerText = answer;
 }
 
@@ -213,6 +237,48 @@ function getElementOnClick(e) {
     var element = e.target;
     return element.id;
 }
+
+
+
+function numPress() {                               //aorb determines which value to store the num for calculations
+    if (aorb === 0) {
+        a += getElementOnClick(event).charAt(0);
+    }
+    else if (aorb === 1) {
+        b += getElementOnClick(event).charAt(0);
+    }
+}
+
+function operatorPress() {
+    aorb = 1;
+    func = getElementOnClick(event).charAt(0);
+}
+
+//check if another operator button has already been pressed. If so, replace 
+function doublePress() {
+    if ((equation.charAt(equation.length - 1) === "+") || (equation.charAt(equation.length - 1) === "-") || (equation.charAt(equation.length - 1) === "×") || (equation.charAt(equation.length - 1) === "÷")) {
+        equation = equation.substring(0, equation.length - 1);
+    }
+}
+
+
+//only calculates one math problem at a time, do below if multiple operators used
+function notBodmas() {
+    if ((equation.charAt(equation.length - 1) != "+") || (equation.charAt(equation.length - 1) != "-") || (equation.charAt(equation.length - 1) != "×") || (equation.charAt(equation.length - 1) != "÷")) {
+        for (let i = 0; i < equation.length - 1; i++) {
+            if (equation[i] === "+" || equation[i] === "-" || equation[i] === "×" || equation[i] === "÷") {
+                answer = operate(func, parseInt(a), parseInt(b));
+                equation = answer;
+                a = answer;
+                b = " ";
+                aorb = 1;
+                func = getElementOnClick(event).charAt(0);
+            }
+        }
+    }
+}
+
+
 
 
 function add(a, b) {
@@ -234,16 +300,16 @@ function divide(a, b) {
 
 function operate(operator, num, num2) {
 
-    if (operator === "add") {
+    if (operator === "+") {
         return add(num, num2);
     }
-    else if (operator === "subtract") {
+    else if (operator === "-") {
         return subtract(num, num2);
     }
-    else if (operator === "multiply") {
+    else if (operator === "*") {
         return multiply(num, num2);
     }
-    else if (operator === "divide") {
+    else if (operator === "/") {
         return divide(num, num2);
     }
 }

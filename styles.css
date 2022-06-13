@@ -40,6 +40,8 @@
      display: flex;
      justify-content: end;
      align-items: center;
+
+     border-bottom: 0px white;
  }
 
  #flex-container #answerScreen {
@@ -49,6 +51,8 @@
      display: flex;
      justify-content: end;
      align-items: center;
+
+     border-top: 0px white;
  }
 
  #flex-container #clearButton {
