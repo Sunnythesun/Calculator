@@ -187,7 +187,22 @@ function clicked() {
         func = " ";
     }
     else if (getElementOnClick(event) === "backButton") {
+
+        if (equation.charAt(equation.length - 1) === "+" || equation.charAt(equation.length - 1) === "-" || equation.charAt(equation.length - 1) === "×" || equation.charAt(equation.length - 1) === "÷") {
+            aorb = 0;
+        }
+
         equation = equation.substring(0, equation.length - 1);
+
+        //this is running twice if you backspace an operator NEEDS FIXING
+        if (aorb === 0) {
+            a = a.substring(0, a.length - 1);
+            console.log(a + " " + b + " " + equation + " " + aorb);
+        }
+        else if (aorb === 1) {
+            b = b.substring(0, b.length - 1);
+            console.log(a + " " + b + " " + equation + " " + aorb);
+        }
     }
     else if (getElementOnClick(event) === "/Button") {
         doublePress();
@@ -252,6 +267,12 @@ function numPress() {                               //aorb determines which valu
 function operatorPress() {
     aorb = 1;
     func = getElementOnClick(event).charAt(0);
+
+    //check if operator is first thing in equation. If so set first num to 0. Invisible char (...probably) means charAt(0) is wrong
+    if (equation.charAt(1) === "+" || equation.charAt(1) === "-" || equation.charAt(1) === "×" || equation.charAt(1) === "÷") {
+        a = 0;
+        equation = "0" + equation;
+    }
 }
 
 //check if another operator button has already been pressed. If so, replace 
