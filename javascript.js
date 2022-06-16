@@ -6,6 +6,10 @@ let b = " ";
 let aorb = 0;
 let func = " ";
 
+let usedDecimala = 0;        //stop multiple decimal points being entered
+let usedDecimalb = 0;
+
+let calculated = 0;     //to determine whether to continue using answer as part of equation or reload
 
 const body = document.body;
 const calcContainer = document.createElement("div");        //flex container creation
@@ -185,21 +189,32 @@ function clicked() {
         b = " ";
         aorb = 0;
         func = " ";
+        usedDecimala = 0;
+        usedDecimalb = 0;
     }
     else if (getElementOnClick(event) === "backButton") {
 
+        let clearedOperator = 0; //value to stop logic running twice when operator has been backspaced
+
         if (equation.charAt(equation.length - 1) === "+" || equation.charAt(equation.length - 1) === "-" || equation.charAt(equation.length - 1) === "×" || equation.charAt(equation.length - 1) === "÷") {
             aorb = 0;
+            clearedOperator = 1;
+        }
+
+        if (equation.charAt(equation.length - 1) === "." && aorb === 0) {
+            usedDecimala = 0;
+        }
+        if (equation.charAt(equation.length - 1) === "." && aorb === 1) {
+            usedDecimalb = 0;
         }
 
         equation = equation.substring(0, equation.length - 1);
 
-        //this is running twice if you backspace an operator NEEDS FIXING
-        if (aorb === 0) {
+        if (aorb === 0 && clearedOperator === 0) {
             a = a.substring(0, a.length - 1);
             console.log(a + " " + b + " " + equation + " " + aorb);
         }
-        else if (aorb === 1) {
+        else if (aorb === 1 && clearedOperator === 0) {
             b = b.substring(0, b.length - 1);
             console.log(a + " " + b + " " + equation + " " + aorb);
         }
@@ -228,8 +243,32 @@ function clicked() {
         equation += "-";
         operatorPress();
     }
+    else if (getElementOnClick(event) === ".Button") {
+        if (aorb === 0 && usedDecimala === 0) {
+            equation += getElementOnClick(event).charAt(0);
+            numPress();
+            usedDecimala = 1;
+        }
+        else if (aorb === 1 && usedDecimalb === 0) {
+            equation += getElementOnClick(event).charAt(0);
+            numPress();
+            usedDecimalb = 1;
+        }
+    }
     else if (getElementOnClick(event) === "=Button") {
-        answer = operate(func, parseInt(a), parseInt(b));
+        equation += "=";
+        calculated = 1;
+
+        if (equation.charAt(1) === "=") {
+            equation = "0 ="
+            answer = 0;
+        }
+        else if (parseInt(b) === 0 && func === "/") {
+            answer = "CANNOT DIVIDE BY 0";
+        }
+        else {
+            answer = operate(func, parseFloat(a), parseFloat(b));
+        }
     }
     else {
         equation += getElementOnClick(event).charAt(0);
@@ -256,6 +295,11 @@ function getElementOnClick(e) {
 
 
 function numPress() {                               //aorb determines which value to store the num for calculations
+    if (calculated === 1) {
+        equation = " ";   //to ensure answer isn't added to upon page reload
+        location.reload();
+    }
+
     if (aorb === 0) {
         a += getElementOnClick(event).charAt(0);
     }
@@ -268,10 +312,14 @@ function operatorPress() {
     aorb = 1;
     func = getElementOnClick(event).charAt(0);
 
-    //check if operator is first thing in equation. If so set first num to 0. Invisible char (...probably) means charAt(0) is wrong
+    if (calculated === 1) {
+        calculated = 0;
+    }
+
+    //check if operator is first thing in equation. If so set first num to 0. Invisible char (...probably) means charAt(0) is not the first char
     if (equation.charAt(1) === "+" || equation.charAt(1) === "-" || equation.charAt(1) === "×" || equation.charAt(1) === "÷") {
         a = 0;
-        equation = "0" + equation;
+        equation = "0 " + equation;
     }
 }
 
