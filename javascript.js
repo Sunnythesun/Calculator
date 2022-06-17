@@ -25,7 +25,6 @@ function createCalculator() {
     for (let i = 0; i < 2; i++) {                                   //creates 2 more divs to get calculator in middle of page
         const div = document.createElement("div");
         calcContainer.append(div);
-        //div.style.backgroundColor = "rgb(116,179,199)";
 
         if (i === 0) {
             calcContainer.append(flexContainer);
@@ -212,11 +211,9 @@ function clicked() {
 
         if (aorb === 0 && clearedOperator === 0) {
             a = a.substring(0, a.length - 1);
-            console.log(a + " " + b + " " + equation + " " + aorb);
         }
         else if (aorb === 1 && clearedOperator === 0) {
             b = b.substring(0, b.length - 1);
-            console.log(a + " " + b + " " + equation + " " + aorb);
         }
     }
     else if (getElementOnClick(event) === "/Button") {
