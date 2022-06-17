@@ -299,7 +299,8 @@ function numPress() {                               //aorb determines which valu
 
     //to ensure calculations are correct if 2nd equation is entered right after the first is calculated
     if (calculated === 1) {
-        equation = getElementOnClick(event).charAt(0);
+        equation = " ";
+        equation += getElementOnClick(event).charAt(0);
         answer = " ";
         a = " ";
         b = " ";
