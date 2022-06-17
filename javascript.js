@@ -6,6 +6,8 @@ let b = " ";
 let aorb = 0;
 let func = " ";
 
+let clearedOperator = 0; //value to stop logic running twice when operator has been backspaced
+
 let usedDecimala = 0;        //stop multiple decimal points being entered
 let usedDecimalb = 0;
 
@@ -188,12 +190,12 @@ function clicked() {
         b = " ";
         aorb = 0;
         func = " ";
+        clearedOperator = 0;
         usedDecimala = 0;
         usedDecimalb = 0;
+        calculated = 0;
     }
     else if (getElementOnClick(event) === "backButton") {
-
-        let clearedOperator = 0; //value to stop logic running twice when operator has been backspaced
 
         if (equation.charAt(equation.length - 1) === "+" || equation.charAt(equation.length - 1) === "-" || equation.charAt(equation.length - 1) === "×" || equation.charAt(equation.length - 1) === "÷") {
             aorb = 0;
@@ -253,6 +255,8 @@ function clicked() {
         }
     }
     else if (getElementOnClick(event) === "=Button") {
+        console.log(a + b + func);
+
         equation += "=";
         calculated = 1;
 
@@ -292,9 +296,19 @@ function getElementOnClick(e) {
 
 
 function numPress() {                               //aorb determines which value to store the num for calculations
+
+    //to ensure calculations are correct if 2nd equation is entered right after the first is calculated
     if (calculated === 1) {
-        equation = " ";   //to ensure answer isn't added to upon page reload
-        location.reload();
+        equation = getElementOnClick(event).charAt(0);
+        answer = " ";
+        a = " ";
+        b = " ";
+        aorb = 0;
+        func = " ";
+        clearedOperator = 0;
+        usedDecimala = 0;
+        usedDecimalb = 0;
+        calculated = 0;
     }
 
     if (aorb === 0) {
