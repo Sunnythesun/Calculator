@@ -11,7 +11,9 @@ let clearedOperator = 0; //value to stop logic running twice when operator has b
 let usedDecimala = 0;        //stop multiple decimal points being entered
 let usedDecimalb = 0;
 
-let calculated = 0;     //to determine whether to continue using answer as part of equation or reload
+let calculated = 0;     //to determine whether to continue using answer as part of equation or start new equation
+
+let keyPress = " ";     //to store value of pressed keyboard
 
 const body = document.body;
 const calcContainer = document.createElement("div");        //flex container creation
@@ -50,7 +52,7 @@ function createCalculator() {
             div.setAttribute("id", "clearButton")
         }
         else if (i === 3) {
-            div.innerText = "BACK";
+            div.innerText = "DELETE";
             div.setAttribute("id", "backButton")
         }
         else if (i === 4) {
@@ -120,7 +122,6 @@ function createCalculator() {
         }
     }
 }
-
 
 document.getElementById("1Button").addEventListener("mousedown", clicked);
 document.getElementById("1Button").addEventListener("mouseup", unclicked);
@@ -264,8 +265,11 @@ function clicked() {
             equation = "0 ="
             answer = 0;
         }
-        else if (parseInt(b) === 0 && func === "/") {
+        else if (parseFloat(b) === 0 && func === "/") {
             answer = "CANNOT DIVIDE BY 0";
+        }
+        else if (b.length < 2) {    //for if = is pressed before full equation is entered
+            answer = a;
         }
         else {
             answer = operate(func, parseFloat(a), parseFloat(b));
@@ -288,8 +292,8 @@ function unclicked() {
 }
 
 
-function getElementOnClick(e) {
-    var element = e.target;
+function getElementOnClick(event) {
+    var element = event.target;
     return element.id;
 }
 
@@ -348,7 +352,7 @@ function notBodmas() {
     if ((equation.charAt(equation.length - 1) != "+") || (equation.charAt(equation.length - 1) != "-") || (equation.charAt(equation.length - 1) != "×") || (equation.charAt(equation.length - 1) != "÷")) {
         for (let i = 0; i < equation.length - 1; i++) {
             if (equation[i] === "+" || equation[i] === "-" || equation[i] === "×" || equation[i] === "÷") {
-                answer = operate(func, parseInt(a), parseInt(b));
+                answer = operate(func, parseFloat(a), parseFloat(b));
                 equation = answer;
                 a = answer;
                 b = " ";
